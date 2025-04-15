@@ -6,6 +6,7 @@ use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CosmetologistServiceController;
 use App\Http\Controllers\ClientServiceController;
+use App\Http\Controllers\ServiceController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -30,6 +31,11 @@ Route::get('/clients/{id}', [ClientController::class, 'show']);
 Route::get('/cosmetologist_services/{id}', [CosmetologistServiceController::class, 'show']);
 
 Route::get('/client_services/{id}', [ClientServiceController::class, 'show']);
+
+
+
+Route::get('/services', [ServiceController::class, 'index']);
+
 
 
 

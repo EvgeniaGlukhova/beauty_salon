@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('cosmetologist_id')->constrained()->onDelete('cascade');
             $table->foreignId('service_id')->constrained()->onDelete('cascade');
-            $table->decimal('price');
-            $table->integer('duration');
+            $table->integer('quantity');
+            $table->decimal('price', 8, 2);
             $table->timestamps();
         });
     }

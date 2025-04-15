@@ -18,7 +18,7 @@ class Cosmetologist extends Model
 
     public function services(): BelongsToMany
     {
-        return $this->belongsToMany(Service::class, 'cosmetologist_services')
+        return $this->belongsToMany(Service::class, 'cosmetologist_service')
             ->withPivot('quantity', 'price');
     }
 }

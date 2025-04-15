@@ -11,9 +11,9 @@ class Service extends Model
 {
     use HasFactory;
 
-    public function cosmetologist(): BelongsToMany
+    public function cosmetologists(): BelongsToMany
     {
-        return $this->belongsToMany(Cosmetologist::class, 'cosmetologist_services')
+        return $this->belongsToMany(Cosmetologist::class, 'cosmetologist_service')
             ->withPivot('quantity', 'price');
     }
 

@@ -12,7 +12,7 @@ class CosmetologistServiceController extends Controller
     public function show(string $id)
     {
         $total = DB::table('cosmetologist_service')
-            ->selectRaw('SUM(price * duration) as total')
+            ->selectRaw('SUM(price * quantity) as total')
             ->where('cosmetologist_id', $id)
             ->first();
 

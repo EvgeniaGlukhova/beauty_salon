@@ -24,7 +24,7 @@
                 <td>{{ $service->id }}</td>
                 <td>{{ $service->name }}</td>
                 <td>{{ $service->pivot->price }}</td>
-                <td>{{ $service->pivot->duration }}</td>
+                <td>{{ $service->pivot->quantity }}</td>
             </tr>
         @endforeach
     </table>
