@@ -19,7 +19,7 @@ class ClientServiceController extends Controller
             ->where('clients.id', $id)
             ->first();
 
-        return view('clients.show', [
+        return view('client_services.show', [
             'client' => Client::with('services')->where('id', $id)->first(),
             'total' => $total
         ]);

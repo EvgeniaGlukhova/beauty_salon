@@ -9,21 +9,17 @@
 <table border="1">
     <thead>
     <tr>
-        <td>ID</td>
-        <td>Имя</td>
-        <td>Записи</td>
+        <th>ID</th>
+        <th>Имя косметолога</th>
+        <th>Действие</th>
     </tr>
     </thead>
     <tbody>
-    @foreach ($cosmetologists as $cosmetologist)
+    @foreach($cosmetologists as $cosmetologist)
         <tr>
             <td>{{ $cosmetologist->id }}</td>
             <td>{{ $cosmetologist->name }}</td>
-            <td>
-                @foreach ($cosmetologist->appointments as $appointment)
-                    <p>{{ $appointment->id }} - {{ $appointment->created_at }}</p>
-                @endforeach
-            </td>
+            <td><a href="/cosmetologists/{{ $cosmetologist->id }}">Подробнее</a></td>
         </tr>
     @endforeach
     </tbody>

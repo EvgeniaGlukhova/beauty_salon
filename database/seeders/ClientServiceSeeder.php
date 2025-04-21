@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 
+
 class ClientServiceSeeder extends Seeder
 {
     /**
@@ -24,7 +25,7 @@ class ClientServiceSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'client_id' => 2,
+                'client_id' => 1,
                 'service_id' => 2,
                 'quantity' => 1,
                 'price' => 2000.00,
@@ -32,7 +33,7 @@ class ClientServiceSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'client_id' => 3,
+                'client_id' => 2,
                 'service_id' => 3,
                 'quantity' => 3,
                 'price' => 5400.00,

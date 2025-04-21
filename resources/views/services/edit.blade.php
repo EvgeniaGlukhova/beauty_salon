@@ -13,7 +13,7 @@
 <body>
 <h2>Редактирование услуги</h2>
 
-<form method="POST" action="{{ url('update', $service->id) }}"/>
+<form method="POST" action="{{ url('/services/update', $service->id) }}">
     @csrf
 
     <label >Наименование</label>

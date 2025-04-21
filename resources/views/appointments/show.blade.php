@@ -10,20 +10,20 @@
 @if($appointment)
     <table border="1">
         <thead>
-        <th>
-        <td>ID</td>
-        <td>Дата записи</td>
+        <tr>
+        <td>ID сеанса</td>
         <td>Косметолог</td>
         <td>Клиент</td>
-        <td>Дата создания</td>
-        </th>
+        <td>Дата и время начала </td>
+        <td>Дата и время конца</td>
+        </tr>
         </thead>
         <tr>
             <td>{{ $appointment->id }}</td>
-            <td>{{ $appointment->appointment_date }}</td>
             <td>{{ $appointment->cosmetologist->name }}</td>
             <td>{{ $appointment->client->name }}</td>
-            <td>{{ $appointment->created_at }}</td>
+            <td>{{ $appointment->start_time }}</td>
+            <td>{{ $appointment->end_time }}</td>
         </tr>
     </table>
 @endif

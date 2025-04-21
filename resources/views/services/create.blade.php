@@ -13,7 +13,7 @@
 <body>
 <h2>Добавление услуги</h2>
 
-<form method="post" action={{ url('store')}} />
+<form method="POST" action="{{ url('services/store') }}">
     @csrf
     <label>Наименование</label>
     <input type="text" name="name" value="{{ old('name') }}"/>

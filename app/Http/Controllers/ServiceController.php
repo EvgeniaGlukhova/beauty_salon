@@ -12,7 +12,10 @@ class ServiceController extends Controller
     public function index()
     {
         $services = Service::all();
-        return view('services.index', compact('services'));
+        return view('services.index', [
+            'services' => Service::all()
+        ]);
+
     }
 
     public function create()
@@ -27,11 +30,11 @@ class ServiceController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
-            'cosmetologist_id' => 'integer'
+            'cosmetologist_id' => 'required|exists:cosmetologists,id'
         ]);
         $service = new Service($validated);
         $service->save();
-        return redirect('/service');
+        return redirect('/services');
     }
 
     public function edit(string $id)
@@ -43,7 +46,7 @@ class ServiceController extends Controller
         ]);
     }
 
-    public function update(Request $request, Service $id)
+    public function update(Request $request, string $id)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
@@ -55,13 +58,13 @@ class ServiceController extends Controller
         $service->price = $validated['price'];
         $service->cosmetologist_id = $validated['cosmetologist_id'];
         $service->save();
-        return redirect('/service');
+        return redirect('/services');
     }
 
     public function destroy(string $id)
     {
         Service::destroy($id);
-        return redirect('/service');
+        return redirect('/services');
     }
 
 }

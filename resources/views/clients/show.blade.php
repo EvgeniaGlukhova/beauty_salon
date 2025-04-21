@@ -11,19 +11,19 @@
     <table border="1">
         <thead>
         <tr>
-            <th>ID</th>
-            <th>Дата сеанса</th>
-            <th>Косметолог</th>
-            <th>Дата создания</th>
+            <td>ID сеанса</td>
+            <td>Косметолог</td>
+            <td>Дата и время начала </td>
+            <td>Дата и время конца</td>
         </tr>
         </thead>
         <tbody>
         @foreach ($client->appointments as $appointment)
             <tr>
                 <td>{{ $appointment->id }}</td>
-                <td>{{ $appointment->date }}</td>
-                <td>{{ $appointment->cosmetologist->name ?? 'Нет данных' }}</td>
-                <td>{{ $appointment->created_at }}</td>
+                <td>{{ $appointment->cosmetologist->name }}</td>
+                <td>{{ $appointment->start_time }}</td>
+                <td>{{ $appointment->end_time }}</td>
             </tr>
         @endforeach
         </tbody>

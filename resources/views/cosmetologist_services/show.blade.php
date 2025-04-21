@@ -17,6 +17,7 @@
             <th>Наименование</th>
             <th>Цена</th>
             <th>Длительность (мин)</th>
+
         </tr>
 
         @foreach ($cosmetologist->services as $service)

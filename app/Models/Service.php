@@ -11,6 +11,12 @@ class Service extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'price',
+        'cosmetologist_id'
+    ];
+
     public function cosmetologists(): BelongsToMany
     {
         return $this->belongsToMany(Cosmetologist::class, 'cosmetologist_service')
