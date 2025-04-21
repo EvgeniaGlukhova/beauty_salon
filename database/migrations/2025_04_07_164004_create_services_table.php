@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->float('price', 8, 2);
+            $table->foreignId('cosmetologist_id')->constrained('cosmetologists');
             $table->timestamps();
         });
     }

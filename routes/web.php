@@ -35,6 +35,12 @@ Route::get('/client_services/{id}', [ClientServiceController::class, 'show']);
 
 
 Route::get('/services', [ServiceController::class, 'index']);
+Route::get('/services/create', [ServiceController::class, 'create']);
+Route::post('/services', [ServiceController::class, 'store']);
+Route::get('/services/edit/{id}/', [ServiceController::class, 'edit']);
+Route::post('/services/update/{id}', [ServiceController::class, 'update']);
+Route::get('/services/destroy/{id}', [ServiceController::class, 'destroy']);
+
 
 
 
