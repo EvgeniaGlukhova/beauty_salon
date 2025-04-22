@@ -9,11 +9,11 @@ use App\Models\Service;
 
 class ServiceController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $services = Service::all();
+        $perpage = $request->perpage ?? 2;
         return view('services.index', [
-            'services' => Service::all()
+            'services' => Service::paginate($perpage)->withQueryString()
         ]);
 
     }

@@ -12,9 +12,9 @@
     </tr>
     </thead>
     <tbody>
-    @foreach ($services as $service)
+    @foreach ($services as $index => $service)
         <tr>
-            <td>{{ $service->id }}</td>
+            <td>{{ $services->firstItem() + $index }}</td>
             <td>{{ $service->name }}</td>
             <td>{{ $service->price }} ₽</td>
             <td>{{ $service->cosmetologist_id }}</td>
@@ -26,3 +26,5 @@
     @endforeach
     </tbody>
 </table>
+
+{{ $services->links() }}
