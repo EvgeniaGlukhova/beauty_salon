@@ -7,6 +7,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CosmetologistServiceController;
 use App\Http\Controllers\ClientServiceController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\LoginController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -35,13 +36,22 @@ Route::get('/client_services/{id}', [ClientServiceController::class, 'show']);
 
 
 Route::get('/services', [ServiceController::class, 'index']);
-Route::get('/services/create', [ServiceController::class, 'create']);
+
+Route::get('/services/create', [ServiceController::class, 'create'])->middleware('auth');
 Route::post('/services/store', [ServiceController::class, 'store']);
-Route::get('/services/edit/{id}/', [ServiceController::class, 'edit']);
-Route::post('/services/update/{id}', [ServiceController::class, 'update']);
-Route::get('/services/destroy/{id}', [ServiceController::class, 'destroy']);
+Route::get('/services/edit/{id}/', [ServiceController::class, 'edit'])->middleware('auth');
+Route::post('/services/update/{id}', [ServiceController::class, 'update'])->middleware('auth');
+Route::get('/services/destroy/{id}', [ServiceController::class, 'destroy'])->middleware('auth');
 
 
+
+Route::get('/login', [LoginController::class, 'login'])->name('login');
+Route::get('/logout', [LoginController::class, 'logout']);
+Route::post('/auth', [LoginController::class, 'authenticate']);
+
+Route::get('/error', function () {
+    return view('error', ['message'=>session('message')]);
+});
 
 
 

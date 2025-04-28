@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Cosmetologist;
 use Illuminate\Http\Request;
 use App\Models\Service;
+use Illuminate\Support\Facades\Gate;
 
 class ServiceController extends Controller
 {
@@ -39,6 +40,13 @@ class ServiceController extends Controller
 
     public function edit(string $id)
     {
+
+
+        if (! Gate::allows('edit-service', Service::all()->where('id', $id)->first())) {
+            return redirect('/error')->with('message', 'У вас нет разрешения на редактирование услуги номер ' . $id);
+        }
+
+
         return view('services.edit', [
             'service' => Service::all()->where('id', $id)->first(),
             'cosmetologists' => Cosmetologist::all()
@@ -63,6 +71,10 @@ class ServiceController extends Controller
 
     public function destroy(string $id)
     {
+
+        if (! Gate::allows('delete-service', Service::all()->where('id', $id)->first())) {
+            return redirect('/error')->with('message', 'У вас нет разрешения на удаление услуги номер ' . $id);
+        }
         Service::destroy($id);
         return redirect('/services');
     }

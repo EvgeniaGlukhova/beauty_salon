@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             AppointmentSeeder::class,
             ClientServiceSeeder::class,
             CosmetologistServiceSeeder::class,
+            UserSeeder::class,
         ]);
     }
 }
