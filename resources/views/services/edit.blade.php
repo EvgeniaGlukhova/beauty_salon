@@ -1,53 +1,48 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>609-21</title>
-    <style>
-        .is-invalid
-        {
-            color: red;
-        }
-    </style>
-</head>
-<body>
-<h2>Редактирование услуги</h2>
+@extends('layout')
+@section('content')
 
-<form method="POST" action="{{ url('/services/update', $service->id) }}">
-    @csrf
+    <div class="container mt-5">
+        <h2 class="mb-4">Редактирование услуги</h2>
 
-    <label >Наименование</label>
-<input type="text" name="name" value="@if (old('name')) {{ old('name')}} @else {{$service->name}} @endif " />
-    @error('name')
-    <div class="is-invalid">{{ $message }}</div>
-    @enderror
-<br>
-    <label >Цена</label>
-    <input type="text" name="price"  value="@if (old('price')) {{ old('price')}} @else {{$service->price}} @endif" />
-    @error('price')
-    <div class="is-invalid">{{ $message }}</div>
-    @enderror
-<br>
-    <label>Косметолог</label>
-    <select name="cosmetologist_id" value=" {{ old('cosmetologist_id') }}">
-        <option style="">
-        @foreach($cosmetologists as $cosmetologist)
-            <option value="{{ $cosmetologist->id }}"
-                    @if(old('cosmetologist_id'))
-                        @if(old('cosmetologist_id') == $cosmetologist->id) selected @endif
-                @else
-                    @if($service->cosmetologist_id == $cosmetologist->id) selected @endif
-            @endif >{{$cosmetologist->name}}
-            </option>
-        @endforeach
-    </select>
-    @error('cosmetologist_id')
-    <div class="is-invalid">{{ $message }}</div>
-    @enderror
-    <br>
+        <form method="POST" action="{{ url('/services/update', $service->id) }}">
+            @csrf
 
-    <button type="submit">Обновить услугу</button>
+            <div class="mb-3">
+                <label class="form-label">Наименование</label>
+                <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
+                       value="{{ old('name', $service->name) }}">
+                @error('name')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
 
-</body>
-</html>
+            <div class="mb-3">
+                <label class="form-label">Цена</label>
+                <input type="text" name="price" class="form-control @error('price') is-invalid @enderror"
+                       value="{{ old('price', $service->price) }}">
+                @error('price')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
 
+            <div class="mb-4">
+                <label class="form-label">Косметолог</label>
+                <select name="cosmetologist_id" class="form-select @error('cosmetologist_id') is-invalid @enderror">
+                    <option disabled selected>Выберите косметолога</option>
+                    @foreach($cosmetologists as $cosmetologist)
+                        <option value="{{ $cosmetologist->id }}"
+                            {{ old('cosmetologist_id', $service->cosmetologist_id) == $cosmetologist->id ? 'selected' : '' }}>
+                            {{ $cosmetologist->name }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('cosmetologist_id')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <button type="submit" class="btn btn-success">Обновить услугу</button>
+        </form>
+    </div>
+
+@endsection

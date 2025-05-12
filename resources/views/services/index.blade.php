@@ -1,30 +1,39 @@
-<h2>Список услуг</h2>
+@extends('layout')
+@section('content')
 
-{{-- Таблица ниже для редактирования и удаления --}}
-<table border="1" cellpadding="5">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Наименование</th>
-        <th>Цена</th>
-        <th>Косметолог</th>
-        <th>Действия</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach ($services as $index => $service)
+<div class="container mt-5">
+    <h2 class="mb-4">Список услуг</h2>
+
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
         <tr>
-            <td>{{ $services->firstItem() + $index }}</td>
-            <td>{{ $service->name }}</td>
-            <td>{{ $service->price }} ₽</td>
-            <td>{{ $service->cosmetologist_id }}</td>
-            <td><a href="{{ url('/services/destroy/'. $service->id)}} ">Удалить</a>
-                <a href="{{ url('/services/edit/' . $service->id) }}">Редактировать</a>
-
-            </td>
+            <th>#</th>
+            <th>Наименование</th>
+            <th>Цена</th>
+            <th>Косметолог (ID)</th>
+            <th>Действия</th>
         </tr>
-    @endforeach
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        @foreach ($services as $index => $service)
+            <tr>
+                <td>{{ $services->firstItem() + $index }}</td>
+                <td>{{ $service->name }}</td>
+                <td>{{ $service->price }} ₽</td>
+                <td>{{ $service->cosmetologist_id }}</td>
+                <td>
+                    <a href="{{ url('/services/edit/' . $service->id) }}" class="btn btn-sm btn-primary">Редактировать</a>
+                    <a href="{{ url('/services/destroy/' . $service->id) }}" class="btn btn-sm btn-danger"
+                       onclick="return confirm('Вы уверены, что хотите удалить эту услугу?')">Удалить</a>
+                </td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
 
-{{ $services->links() }}
+    <div class="d-flex justify-content-center">
+        {{ $services->links() }}
+    </div>
+</div>
+
+@endsection

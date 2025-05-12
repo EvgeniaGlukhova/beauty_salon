@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Gate;
 use App\Models\Service;
 use Illuminate\Pagination\Paginator;
 
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Auth;
+
+
 class AppServiceProvider extends ServiceProvider
 {
 
@@ -26,6 +30,13 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('edit-service', function ($user, Service $service) {
             return $user->is_admin === true;
         });
+
+        Gate::define('create-service', function ($user) {
+            return $user->is_admin === true;
+        });
+
+
+
 
 
     }

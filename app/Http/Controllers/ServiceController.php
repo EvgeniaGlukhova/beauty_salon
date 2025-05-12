@@ -21,6 +21,10 @@ class ServiceController extends Controller
 
     public function create()
     {
+        if (! Gate::allows('create-service')) {
+            return redirect('/services')->withErrors(['error' => 'У вас нет прав на создание услуги']);
+        }
+
         return view('services.create', [
             'cosmetologists' => Cosmetologist::all()
         ]);
@@ -41,9 +45,8 @@ class ServiceController extends Controller
     public function edit(string $id)
     {
 
-
         if (! Gate::allows('edit-service', Service::all()->where('id', $id)->first())) {
-            return redirect('/error')->with('message', 'У вас нет разрешения на редактирование услуги номер ' . $id);
+            return redirect('/services')->withErrors(['error'=> 'У вас нет разрешения на редактирование услуги номер ' . $id]);
         }
 
 
@@ -72,11 +75,11 @@ class ServiceController extends Controller
     public function destroy(string $id)
     {
 
-        if (! Gate::allows('delete-service', Service::all()->where('id', $id)->first())) {
-            return redirect('/error')->with('message', 'У вас нет разрешения на удаление услуги номер ' . $id);
+        if (! Gate::allows('destroy-service', Service::all()->where('id', $id)->first())) {
+            return redirect('/services')->withErrors(['error'=> 'У вас нет разрешения на удаление услуги номер ' . $id]);
         }
         Service::destroy($id);
-        return redirect('/services');
+        return redirect('/services')->with(['success' => 'Услуга успешно удалена']);
     }
 
 }
