@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AppointmentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,5 +23,24 @@ Route::get('/cosmetologists/{id}', [CosmetologistControllerApi::class, 'show']);
 
 use App\Http\Controllers\AppointmentControllerApi;
 
-Route::get('/appointments', [AppointmentControllerApi::class, 'index']);
+Route::get('/c', [AppointmentControllerApi::class, 'index']);
 Route::get('/appointments/{id}', [AppointmentControllerApi::class, 'show']);
+
+Route::middleware('auth:sanctum')->get('/appointments', [AppointmentControllerApi::class, 'index']);
+
+use App\Http\Controllers\AuthController;
+
+Route::post('/login', [AuthController::class, 'login']);
+
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
+Route::middleware('auth:sanctum')->get('/logout', [AuthController::class, 'logout']);
+
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::post('/appointments', [AppointmentController::class, 'store']);
+    Route::get('user',function(Request $request){
+        return $request->user();
+    });
+    Route::get('/logout', [AuthController::class, 'logout']);
+});
