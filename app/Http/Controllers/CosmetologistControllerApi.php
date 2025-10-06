@@ -13,7 +13,14 @@ class CosmetologistControllerApi extends Controller
      */
     public function index()
     {
-        return response(Cosmetologist::all());
+        return response(Cosmetologist::limit($request->perpage ?? 5)
+            ->offset(($request->perpage ?? 5) * ($request->page ?? 0))
+            ->get());
+    }
+
+    public function total()
+    {
+        return response(Cosmetologist::all()->count());
     }
 
     /**
