@@ -6,11 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Models\Service;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
+
+use Illuminate\Support\Facades\Log;
+use Exception;
+
 class ServiceControllerApi extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index(Request $request)
     {
         return response(Service::limit($request->perpage ?? 5)
@@ -23,33 +27,59 @@ class ServiceControllerApi extends Controller
         return response(Service::all()->count());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
-        //
+        if (! Gate::allows('create-service')) {
+            return response()->json([
+                'code' =>  1,
+                'message' => 'У вас не прав на добавление услуги'
+            ]);
+        }
+        $validated = $request->validate([
+            'name' => 'required|max:255|unique:services,name',
+            'price' => 'required|numeric|min:0',
+            'cosmetologist_id' => 'required|numeric',
+            'image'=>'required|file',
+        ]);
+        $file = $request->file('image');
+
+        $fileName = rand(1, 10000) . '.' . $file->getClientOriginalName();
+
+        try {
+            $path = Storage::disk('s3')->putFileAs('service_pictures', $file, $fileName);
+            $fileUrl = Storage::disk('s3')->url($path);
+        }
+        catch (\Exception $e) {
+            return response()->json([
+                'code' =>  2,
+                'message' => 'Ошибка загрузки файла в хранилище S3',
+                'error' => $e->getMessage(),
+            ]);
+        };
+        $service = new Service($validated);
+        $service->picture_url = $fileUrl;
+        $service->save();
+        return response()->json([
+            'code' =>  0,
+            'message' => 'Услуга успешно добавлена',
+        ]);
+
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(string $id)
     {
         return response(Service::find($id));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(Request $request, string $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(string $id)
     {
         //

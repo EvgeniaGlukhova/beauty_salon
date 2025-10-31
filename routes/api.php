@@ -3,6 +3,9 @@
 use App\Http\Controllers\AppointmentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Log;
+use Aws\S3\S3Client;
+use Aws\Exception\AwsException;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -37,7 +40,7 @@ Route::post('/login', [AuthController::class, 'login']);
 //Route::middleware('auth:sanctum')->get('/logout', [AuthController::class, 'logout']);
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
-    Route::get('/appointments', [AppointmentController::class, 'index']);
+    Route::get('/appointments', [AppointmentControllerApi::class, 'index']);
     Route::get('user',function(Request $request){
         return $request->user();
     });
@@ -49,3 +52,10 @@ Route::get('/services_total',[ServiceControllerApi::class, 'total']);
 Route::get('/cosmetologists_total',[CosmetologistControllerApi::class, 'total']);
 
 Route::get('/appointments_total',[AppointmentControllerApi::class, 'total']);
+
+
+Route::middleware('auth:sanctum')->post('/service', [ServiceControllerApi::class, 'store']);
+
+
+
+
